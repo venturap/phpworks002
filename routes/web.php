@@ -24,5 +24,8 @@ Route::get('/test', function () {
 });
 
 Route::get('/tasks', [TasksController::class, 'index']);
+Route::get('/tasks/edit2/{id}', [TasksController::class, 'inlineEdit']);
 Route::get('/tasks/{id}', [TasksController::class, 'show']);
+Route::put('/tasks/{id}', [TasksController::class, 'edit']);
 Route::post('/tasks', [TasksController::class, 'store']);
+Route::delete('tasks/{id}', [TasksController::class, 'destroy']);

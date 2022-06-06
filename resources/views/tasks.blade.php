@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Tasks App</h1>
-
+@extends('layout')
+@section('title', 'List of Tasks')
+@section('content')
     <form method="POST">
         @csrf
         <input type="text" name="task_name" placeholder="Add a task">
@@ -17,28 +9,39 @@
     <table>
         <tr>
             <th>Task</th>
-            <th>Action</th>
+            <th colspan="2">Action</th>
         </tr>
         @foreach ($tasks as $task)
             <tr>
-                <td>{{ $task->name }}</td>
                 <td>
-                    <button>Delete</button>
+                    @if ($editMode == $task->id)
+                        <form method="POST" action="/tasks/{{$task->id}}">
+                            @csrf
+                            @method('PUT')
+                            <input type="text" name="name" value="{{ $task->name }}">
+                            <button type="submit">Update</button>
+                        </form>
+                    @else
+                        {{ $task->name }}
+                    @endif
+                </td>
+                <td>
+                    <form method="POST" action="/tasks/{{$task->id}}">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+                <td>
+                    <a href="/tasks/{{$task->id}}"><button type="submit">Edit</button></a>
+                </td>
+                <td>
+                    <a href="/tasks/edit2/{{$task->id}}"><button type="submit">Edit2</button></a>
                 </td>
             </tr>
         @endforeach
     </table>
-    <ul>
-        @foreach ($tasks as $task)
-            <li>
-                <a
-                href="/tasks/{{$task->id}}"
-                title="{{$task->description}}"
-                >
-                    {{$task->name}}
-                </a>
-            </li>
-        @endforeach
-    </ul>
-</body>
-</html>
+@endsection
+
+
+

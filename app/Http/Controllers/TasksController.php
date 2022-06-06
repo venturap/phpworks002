@@ -9,33 +9,58 @@ class TasksController extends Controller
 {
     public function index()
     {
-
-
         return view('tasks', [
-            'tasks' => Task::all()
+            'tasks' => Task::all(),
+            'editMode' => false
         ]);
+    }
 
-        //foreach (Task::all() as $task) {
-        //    echo '<h2>' . $task->name . '</h2>';
-        //    echo $task->description . '<br><br>';
-        //}
-
-        //return '<h1>Hello World from TasksController</h1>';
+    public function inlineEdit($id)
+    {
+        return view('tasks', [
+            'tasks' => Task::all(),
+            'editMode' => $id
+        ]);
     }
 
     public function show($id)
     {
         $task = Task::find($id);
-        echo '<h2>' . $task->name . '</h2>';
-        echo $task->description . '<br><br>';
+
+        return view('edit_task', [
+            'task' => $task
+        ]);
+    }
+
+    public function edit($id)
+    {
+        $task = Task::find($id);
+
+        $task->name = request('name');
+
+        $task->description = request('description') ?? $task->description;
+
+        $task->save();
+
+        return redirect('/tasks');
+
     }
 
     public function store()
     {
         $task = new Task();
+
         $task->name = request('task_name');
         $task->description = '';
         $task->save();
+
+        return redirect('/tasks');
+    }
+
+    public function destroy($id)
+    {
+        $task = Task::find($id);
+        $task->delete();
 
         return redirect('/tasks');
     }
