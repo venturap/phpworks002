@@ -6,14 +6,14 @@
         <input type="text" name="task_name" placeholder="Add a task">
         <button type="submit">Add Task</button>
     </form>
-    <table>
-        <tr>
-            <th>Task</th>
+    <table class="border-collapse border border-slate-500">
+        <tr class="border border-slate-600">
+            <th class="border border-slate-600">Task</th>
             <th colspan="2">Action</th>
         </tr>
         @foreach ($tasks as $task)
-            <tr>
-                <td>
+            <tr class="border border-slate-600">
+                <td class="border border-slate-600">
                     @if ($editMode == $task->id)
                         <form method="POST" action="/tasks/{{$task->id}}">
                             @csrf
