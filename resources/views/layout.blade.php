@@ -7,12 +7,17 @@
     <link href="/css/app.css" rel="stylesheet">
     <title> @yield('title') </title>
 </head>
-<body class="bg-gray-light">
-    <h1>Tasks App</h1>
+<body class="container">
+    <div class="row justify-content-center">
+        <h1 class="text-center">Tasks App</h1>
 
-    <div class="bg-white">
-        @yield('content')
+        <div class="col-10">
+
+            <div class="container">
+                @yield('content')
+            </div>
+
+        </div>
     </div>
-
 </body>
 </html>
